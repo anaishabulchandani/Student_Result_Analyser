@@ -2,11 +2,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# ---------------------------------
-# 🎓 Student Result Analyzer (Multi-Subject Version)
-# ---------------------------------
-
-st.title("📊 Student Result Analyzer")
+st.title("Student Result Analyzer")
 
 # Initialize student data
 if "students" not in st.session_state:
@@ -16,22 +12,22 @@ if "students" not in st.session_state:
 
 # Sidebar Menu
 menu = st.sidebar.radio(
-    "📘 Menu",
+    " Menu",
     [
-        "1️ Add Student Record",
-        "2️Display All Records",
-        "3️ Search Student",
-        "4️ Sort Records by Average",
-        "5️ Show Topper",
-        "6️ Show Class Average",
-        "7️ Show Graph (Bar Chart)",
-        "8️ Exit",
+        "Add Student Record",
+        "Display All Records",
+        "Search Student",
+        "Sort Records by Average",
+        "Show Topper",
+        "Show Class Average",
+        "Show Graph (Bar Chart)",
+        "Exit",
     ],
 )
 
-# 1️⃣ Add Student Record
+# Add Student Record
 if menu.startswith("1"):
-    st.subheader("➕ Add Student Record")
+    st.subheader("Add Student Record")
     name = st.text_input("Enter Student Name")
     roll = st.text_input("Enter Roll No")
     maths = st.number_input("Maths Marks", min_value=0, max_value=100, step=1)
@@ -54,13 +50,13 @@ if menu.startswith("1"):
                 }
             )
             st.session_state.students = pd.concat([st.session_state.students, new_data], ignore_index=True)
-            st.success(f"✅ Record Added for {name} (Average: {avg:.2f}%)")
+            st.success(f"Record Added for {name} (Average: {avg:.2f}%)")
         else:
-            st.error("⚠️ Please enter both name and roll number!")
+            st.error(" Please enter both name and roll number!")
 
 # 2️ Display All Records
 elif menu.startswith("2"):
-    st.subheader("📋 All Student Records")
+    st.subheader("All Student Records")
     if not st.session_state.students.empty:
         st.dataframe(st.session_state.students)
     else:
@@ -68,13 +64,13 @@ elif menu.startswith("2"):
 
 # 3️ Search Student (Linear Search)
 elif menu.startswith("3"):
-    st.subheader("🔍 Search Student by Roll No")
+    st.subheader("Search Student by Roll No")
     roll = st.text_input("Enter Roll No to Search")
     if st.button("Search"):
         found = False
         for _, row in st.session_state.students.iterrows():
             if row["Roll No"] == roll:
-                st.success(f"✅ Found: {row['Name']}")
+                st.success(f"Found: {row['Name']}")
                 st.write(row)
                 found = True
                 break
@@ -83,7 +79,7 @@ elif menu.startswith("3"):
 
 # 4️ Sort Records by Average (Bubble Sort)
 elif menu.startswith("4"):
-    st.subheader("📈 Sort Records by Average Marks")
+    st.subheader("Sort Records by Average Marks")
     df = st.session_state.students.copy()
     if df.empty:
         st.info("No data to sort.")
@@ -97,7 +93,7 @@ elif menu.startswith("4"):
 
 # 5 Show Topper
 elif menu.startswith("5"):
-    st.subheader("🏆 Topper of the Class")
+    st.subheader("Topper of the Class")
     if not st.session_state.students.empty:
         topper = st.session_state.students.loc[st.session_state.students["Average"].idxmax()]
         st.success(f"Topper: {topper['Name']} ({topper['Average']:.2f}%)")
@@ -107,7 +103,7 @@ elif menu.startswith("5"):
 
 # 6️ Show Class Average
 elif menu.startswith("6"):
-    st.subheader("📊 Class Average")
+    st.subheader("Class Average")
     if not st.session_state.students.empty:
         avg = st.session_state.students["Average"].mean()
         st.success(f"Class Average: {avg:.2f}%")
@@ -116,7 +112,7 @@ elif menu.startswith("6"):
 
 # 7️ Show Graph (Bar Chart)
 elif menu.startswith("7"):
-    st.subheader("📈 Bar Chart of Student Averages")
+    st.subheader("Bar Chart of Student Averages")
     if not st.session_state.students.empty:
         fig, ax = plt.subplots()
         ax.bar(st.session_state.students["Name"], st.session_state.students["Average"], color="skyblue")
@@ -129,5 +125,4 @@ elif menu.startswith("7"):
 
 # 8️ Exit
 elif menu.startswith("8"):
-    st.subheader("👋 Thank you for using Student Result Analyzer!")
-    st.info("You can close the tab or go back to another menu.")
+    st.subheader("Thank you for using Student Result Analyzer!")
